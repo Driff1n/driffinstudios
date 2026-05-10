@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRIFFIN | SUPREME HUB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --gold: #ffcc00; --purple: #a020f0; --neon: #00ffcc; --dark: #080808; }
+        body { margin:0; font-family:"Segoe UI", sans-serif; background:var(--dark); color:#fff; overflow-x:hidden; }
+        .bg { position:fixed; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at bottom left, #1a0033, #080808); z-index:-1; }
+        .container { max-width:1100px; margin:0 auto; padding:40px 20px; }
+        
+        header h1 { font-size:3.5rem; text-align:center; margin:0; background: linear-gradient(90deg, var(--gold), var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter: drop-shadow(0 0 15px rgba(255,204,0,0.3)); }
+        
+        /* Dashboard Grid */
+        .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px; margin-top:30px; }
+        .card { background:rgba(30,30,30,0.5); border:1px solid #333; border-radius:15px; padding:25px; text-align:center; cursor:pointer; transition:0.3s; position:relative; overflow:hidden; }
+        .card:hover { border-color:var(--gold); transform:translateY(-10px); background:rgba(50,50,50,0.8); }
+        .card i { font-size:2.5rem; margin-bottom:15px; color:var(--gold); }
+        
+        /* Shop Page */
+        #shop-page { display:none; animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { transform:translateY(50px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+        .product-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:25px; margin-top:20px; }
+        .p-card { background:#111; border-radius:15px; border:1px solid #222; overflow:hidden; }
+        .p-img { width:100%; height:180px; background:linear-gradient(135deg, #222, #000); display:flex; align-items:center; justify-content:center; }
+        .p-info { padding:20px; }
+        .label { display:inline-block; font-size:0.7rem; color:var(--neon); border:1px solid var(--neon); padding:3px 10px; border-radius:5px; margin-bottom:10px; font-weight:bold; }
+        .price { display:block; color:var(--gold); font-weight:bold; font-size:1.4rem; }
+        
+        /* Note Box */
+        .discord-note { background:rgba(160,32,240,0.1); border:1px dashed var(--purple); padding:15px; border-radius:10px; text-align:center; margin:20px 0; color:var(--purple); font-weight:bold; }
+
+        /* Vouch Section */
+        .vouch-container { display:flex; gap:15px; overflow-x:auto; padding:20px 0; scrollbar-width:none; }
+        .vouch-box { background:#151515; border:1px solid #333; padding:20px; border-radius:15px; min-width:260px; border-left:4px solid var(--gold); }
+        .stars { color:var(--gold); margin-bottom:10px; }
+
+        /* AI Floating Assistant */
+        #ai-btn { position:fixed; bottom:25px; right:25px; width:65px; height:65px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 0 20px rgba(255,204,0,0.5); z-index:1000; color:#000; }
+        #ai-box { position:fixed; bottom:100px; right:25px; width:320px; background:#0a0a0a; border:2px solid var(--gold); border-radius:20px; display:none; flex-direction:column; z-index:1000; overflow:hidden; }
+        .ai-header { background:var(--gold); color:#000; padding:12px; font-weight:bold; display:flex; justify-content:space-between; }
+        .ai-chat { height:250px; padding:15px; overflow-y:auto; font-size:0.85rem; line-height:1.4; color:#ddd; }
+        .ai-input { border-top:1px solid #222; display:flex; }
+        .ai-input input { flex:1; background:transparent; border:none; color:#fff; padding:12px; outline:none; }
+
+        .btn-buy { width:100%; padding:12px; background:var(--gold); color:#000; border:none; border-radius:8px; font-weight:bold; margin-top:15px; cursor:pointer; }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="container">
+        <header>
+            <h1>DRIFFIN STUDIOS</h1>
+            <p style="text-align:center; color:var(--gold); letter-spacing:2px; font-size:0.8rem;">EST. 2024 | THE NEXT GEN DEVELOPER</p>
+        </header>
+
+        <div class="discord-note">
+            <i class="fab fa-discord"></i> JOIN OUR DISCORD TO CONVERSE WITH THE OWNER DIRECTLY!
+        </div>
+
+        <div class="grid" id="main-grid">
+            <div class="card" onclick="showShop()"><i class="fas fa-shopping-bag"></i><h3>SYSTEM SHOP</h3><p style="font-size:0.7rem; color:#666;">Premium Roblox Assets</p></div>
+            <div class="card" onclick="window.open('https://discord.gg/UHHVW6GmR')"><i class="fas fa-terminal"></i><h3>TERMUX TOOLS</h3><p style="font-size:0.7rem; color:#666;">Scripting & Automation</p></div>
+            <div class="card" onclick="window.open('https://discord.gg/UHHVW6GmR')"><i class="fas fa-user-shield"></i><h3>WHITELIST</h3><p style="font-size:0.7rem; color:#666;">Key Access System</p></div>
+            <div class="card" onclick="window.open('https://discord.gg/UHHVW6GmR')"><i class="fas fa-envelope"></i><h3>COMMISSIONS</h3><p style="font-size:0.7rem; color:#666;">Custom Orders</p></div>
+        </div>
+
+        <div id="shop-page">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:15px;">
+                <h2 style="color:var(--gold); margin:0;">DEVELOPER MARKET</h2>
+                <button onclick="hideShop()" style="background:none; border:1px solid #444; color:#888; padding:5px 15px; border-radius:20px; cursor:pointer;">&larr; Back</button>
+            </div>
+            <div class="product-grid">
+                <div class="p-card">
+                    <div class="p-img"><i class="fas fa-code fa-4x" style="color:#222;"></i></div>
+                    <div class="p-info">
+                        <h3>Admin System V3</h3>
+                        <span class="label">OTSM FOR ROLEPLAY</span>
+                        <span class="price">₱150.00</span>
+                        <button class="btn-buy" onclick="window.open('https://discord.gg/UHHVW6GmR')">ORDER VIA DISCORD</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="vouch-section">
+            <h3 style="color:var(--neon); margin-bottom:10px;">CUSTOMER FEEDBACK</h3>
+            <div class="vouch-container">
+                <div class="vouch-box"><div class="stars">★★★★★</div><b>@Smagz</b><p style="font-size:0.8rem; color:#777;">"Pinaka-solid na scripter. No lag yung admin system!"</p></div>
+                <div class="vouch-box"><div class="stars">★★★★★</div><b>@Garal</b><p style="font-size:0.8rem; color:#777;">"Trusted dev. Legit 100% transac."</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ai-btn" onclick="toggleAI()"><i class="fas fa-brain fa-2x"></i></div>
+    <div id="ai-box">
+        <div class="ai-header">DRIFFIN ASSISTANT v2.0 <span onclick="toggleAI()" style="cursor:pointer">&times;</span></div>
+        <div class="ai-chat" id="chat">
+            <b>AI:</b> Uy, DRIFFIN! Ako ang assistant mo. Pwede kang magtanong tungkol sa Termux, Roblox scripting, o kung paano bumili. Ano plano natin?
+        </div>
+        <div class="ai-input">
+            <input type="text" id="ai-in" placeholder="Ask something..." onkeypress="if(event.key==='Enter') sendAI()">
+        </div>
+    </div>
+
+    <audio id="chill-bgm" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const bgm = document.getElementById('chill-bgm');
+        bgm.volume = 0.3;
+
+        function showShop(){ 
+            document.getElementById('main-grid').style.display='none'; 
+            document.getElementById('shop-page').style.display='block'; 
+            bgm.play().catch(()=>{}); 
+        }
+        function hideShop(){ 
+            document.getElementById('main-grid').style.display='grid'; 
+            document.getElementById('shop-page').style.display='none'; 
+        }
+        function toggleAI(){ 
+            var box = document.getElementById('ai-box'); 
+            box.style.display = (box.style.display==='flex')?'none':'flex'; 
+        }
+        function sendAI(){
+            var input = document.getElementById('ai-in');
+            var chat = document.getElementById('chat');
+            var val = input.value.toLowerCase();
+            if(val != ""){
+                chat.innerHTML += "<br><b style='color:var(--neon)'>You:</b> " + input.value;
+                let reply = "Pasensya na, medyo busy pa si DRIFFIN. Create ka lang ng ticket sa Discord para sa direct orders!";
+                
+                if(val.includes("price") || val.includes("magkano")){ reply = "Ang Admin System ay ₱150, at ang Viper Hub ay ₱300. Sulit 'to!"; }
+                else if(val.includes("legit")){ reply = "100% Legit 'to, check mo yung Reviews section sa baba!"; }
+                else if(val.includes("termux")){ reply = "Expert si DRIFFIN sa Termux scripting. Ano bang tool ang kailangan mo?"; }
+                
+                setTimeout(()=>{
+                    chat.innerHTML += "<br><b style='color:var(--gold)'>AI:</b> " + reply;
+                    chat.scrollTop = chat.scrollHeight;
+                }, 800);
+                input.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
